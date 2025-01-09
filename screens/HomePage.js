@@ -6,31 +6,48 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { NavigationContainer } from "@react-navigation/native";
 import MapView from "react-native-maps";
 import { Ionicons } from "@expo/vector-icons";
 
-const WelcomeScreen = () => {
+// Écrans pour chaque fonctionnalité
+function ChatScreen() {
   return (
-    <View style={styles.welcomeContainer}>
-      <Text style={styles.welcomeText}>Welcome to Coco Rides!</Text>
-      <TouchableOpacity
-        style={styles.startButton}
-        onPress={() => setShowWelcome(false)}
-      >
-        <Text style={styles.startButtonText}>Get Started</Text>
-      </TouchableOpacity>
+    <View style={styles.screen}>
+      <Text>Chat Screen</Text>
     </View>
   );
-};
+}
 
-export default function App() {
-  const [showWelcome, setShowWelcome] = useState(true);
+function SettingsScreen() {
+  return (
+    <View style={styles.screen}>
+      <Text>Settings Screen</Text>
+    </View>
+  );
+}
+
+function HelpScreen() {
+  return (
+    <View style={styles.screen}>
+      <Text>Help Screen</Text>
+    </View>
+  );
+}
+
+function DriverModeScreen() {
+  return (
+    <View style={styles.screen}>
+      <Text>Driver Mode Screen</Text>
+    </View>
+  );
+}
+
+// Écran principal avec la carte
+function MainScreen({ navigation }) {
   const [pickup, setPickup] = useState("Current Location");
   const [destination, setDestination] = useState("");
-
-  if (showWelcome) {
-    return <WelcomeScreen />;
-  }
 
   return (
     <View style={styles.container}>
@@ -39,10 +56,10 @@ export default function App() {
 
       {/* Barre inférieure */}
       <View style={styles.bottomPanel}>
-        {/* Barre supérieure avec flèche retour et titre */}
+        {/* Barre supérieure avec icône hamburger */}
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => setShowWelcome(true)}>
-            <Ionicons name="arrow-back-outline" size={20} color="#333" />
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Ionicons name="menu-outline" size={24} color="#333" />
           </TouchableOpacity>
           <Text style={styles.title}>Plan your ride</Text>
         </View>
@@ -78,6 +95,23 @@ export default function App() {
         </View>
       </View>
     </View>
+  );
+}
+
+// Drawer Navigator
+const Drawer = createDrawerNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator initialRouteName="Main">
+        <Drawer.Screen name="Plan your ride" component={MainScreen} />
+        <Drawer.Screen name="Chat" component={ChatScreen} />
+        <Drawer.Screen name="Settings" component={SettingsScreen} />
+        <Drawer.Screen name="Help" component={HelpScreen} />
+        <Drawer.Screen name="Driver Mode" component={DriverModeScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -161,27 +195,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#ddd",
     marginVertical: 8,
   },
-  welcomeContainer: {
+  screen: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
-  },
-  welcomeText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-    color: "#333",
-  },
-  startButton: {
-    backgroundColor: "#007aff",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-  },
-  startButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });
