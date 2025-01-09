@@ -9,20 +9,34 @@ import {
 import MapView from "react-native-maps";
 import { Ionicons } from "@expo/vector-icons";
 
+const WelcomeScreen = () => {
+  return (
+    <View style={styles.welcomeContainer}>
+      <Text style={styles.welcomeText}>Welcome to Coco Rides!</Text>
+      <TouchableOpacity
+        style={styles.startButton}
+        onPress={() => setShowWelcome(false)}
+      >
+        <Text style={styles.startButtonText}>Get Started</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 export default function App() {
-  // État pour basculer entre WelcomeScreen et la carte
   const [showWelcome, setShowWelcome] = useState(true);
   const [pickup, setPickup] = useState("Current Location");
   const [destination, setDestination] = useState("");
 
-  // Si `showWelcome` est vrai, afficher `WelcomeScreen`
   if (showWelcome) {
     return <WelcomeScreen />;
   }
 
-  // Sinon, afficher la carte
   return (
+    <View style={styles.container}>
+      {/* Carte */}
+      <MapView style={styles.map} />
+
       {/* Barre inférieure */}
       <View style={styles.bottomPanel}>
         {/* Barre supérieure avec flèche retour et titre */}
@@ -40,7 +54,7 @@ export default function App() {
           <Ionicons name="chevron-down-outline" size={16} color="#333" />
         </TouchableOpacity>
 
-        {/* Section unique pour Current Location et Where to? */}
+        {/* Section localisation */}
         <View style={styles.locationContainer}>
           {/* Localisation actuelle */}
           <View style={styles.locationRow}>
@@ -146,5 +160,28 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: "#ddd",
     marginVertical: 8,
+  },
+  welcomeContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  welcomeText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+    color: "#333",
+  },
+  startButton: {
+    backgroundColor: "#007aff",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  startButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
