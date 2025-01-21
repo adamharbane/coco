@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "coco",
+    "newArchEnabled": true,
     "slug": "coco",
     "version": "1.0.0"
   }

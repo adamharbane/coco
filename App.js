@@ -2,15 +2,16 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import WelcomeScreen from "./screens/WelcomeScreens";
-import LoginScreen from "./screens/LoginScreen"; 
-import SignUpScreen from './screens/SignUpScreen';
+import LoginScreen from "./screens/LoginScreen.jsx"; 
+import SignUpScreen from './screens/SignUpScreen.jsx';
+import HomePage from './screens/HomePage.jsx';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
+      <Stack.Navigator initialRouteName="HomePage">
         <Stack.Screen
           name="Welcome"
           component={WelcomeScreen}
@@ -25,6 +26,11 @@ export default function App() {
           name="SignUp"
           component={SignUpScreen}
           options={{ title: "SignUp" }}
+        />
+        <Stack.Screen
+          name="HomePage"
+          component={HomePage}
+          options={{ headerShown : false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
